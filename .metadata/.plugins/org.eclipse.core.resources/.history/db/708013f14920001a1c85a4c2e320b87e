@@ -1,0 +1,113 @@
+package control;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.ItemPedido;
+import model.Produto;
+
+public class ItemPedidoDAO {
+	
+	private Connection con;
+	private PreparedStatement ps;
+	private ItemPedido ip;
+	
+	public boolean cadastraItemPedido(ItemPedido ip) throws SQLException {
+		String sql = "insert into itemPedido values(default,?, ?, ?, ?,?);";
+		con = ConnectionDB.getConnection();
+		
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, ip.getPedido());
+		ps.setInt(2, ip.getCodProd());
+		ps.setInt(3, ip.getQuantidade());
+		ps.setDouble(5, ip.getTotal());
+		
+		if(ps.executeUpdate()>0) {
+			updatePreco();
+			return true;	
+		}else {
+			return false;
+		}
+	}
+	
+	public void updatePreco() throws SQLException {
+		String sql = "call pr_atualiza_precos();";
+		con = ConnectionDB.getConnection();
+		try(PreparedStatement preparedStatement = con.prepareStatement(sql)){
+			preparedStatement.execute();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public String nomeProd(int cod) throws SQLException{
+		String recebeRS = null;
+		
+			String sql = "select * from itens WHERE codigoProd = " + cod + ";";
+			con = ConnectionDB.getConnection();
+			ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				recebeRS = rs.getString("nome");
+				return recebeRS;
+			}	
+		return recebeRS;
+	}
+	
+	public List<ItemPedido> listaPedidos(int pedido) throws SQLException {
+		List<ItemPedido> ipList;
+		String sql = "select * from itemPedido where pedido =  " + pedido + ";";
+		con = ConnectionDB.getConnection();
+		PreparedStatement prep = con.prepareStatement(sql);
+		ResultSet rs = prep.executeQuery();
+		ipList = new ArrayList<ItemPedido>();
+		
+		while(rs.next()) {
+			ip = new ItemPedido();
+			ip.setPedido(rs.getInt("pedido"));
+			ip.setCodProd(rs.getInt("codigoProd"));
+			ip.setQuantidade(rs.getInt("quantidade"));
+			ip.setTotal(rs.getDouble("total"));
+			ipList.add(ip);
+		}
+		return ipList;		
+	}
+	
+	public boolean editarItemPedido(ItemPedido ip, int id_pedido) {
+		
+		String sql = "update itemPedido set quantidade = ? where id_iPedido = " + id_pedido + ";";
+		con = ConnectionDB.getConnection();
+		PreparedStatement prs;
+		try {
+			prs = con.prepareStatement(sql);
+			prs.setInt(1, ip.getQuantidade());
+			prs.execute();
+			return true;
+			
+		} catch (SQLException e) {
+			return false;
+		}
+	
+	}
+	
+	public ItemPedido getItemPedido(int capturei) throws SQLException {
+		ItemPedido ip = new ItemPedido();
+		String sql = "select * from itemPedido where pedido = ?";
+		con = ConnectionDB.getConnection();
+		PreparedStatement prepa = con.prepareStatement(sql);
+		prepa.setInt(1, capturei);
+		ResultSet res = prepa.executeQuery();
+		while(res.next()) {
+			ip.setPedido(res.getInt("pedido"));
+			ip.setCodProd(res.getInt("codigoProd"));
+			ip.setQuantidade(res.getInt("quantidade"));
+			ip.setTotal(res.getDouble("total"));
+		}
+		return ip;
+	}
+}

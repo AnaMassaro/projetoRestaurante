@@ -1,0 +1,29 @@
+package control;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import model.Pedido;
+
+public class PedidoDAO {
+	
+	private Connection con;
+	private PreparedStatement ps;
+	private Pedido p;
+	
+	public boolean cadastraPedido(Pedido p) throws SQLException {
+		String sql = "insert into pedidos values(default, ?);";
+		con = ConnectionDB.getConnection();
+		
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, p.getComanda());
+		
+		if(ps.executeUpdate()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+}

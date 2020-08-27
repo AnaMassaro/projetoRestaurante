@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<%@page import="model.Produto"%>
+<%@page import="java.util.List"%>
+<%@page import="control.ProdutoDAO"%>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cardapio</title>
+
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="style.css">
+
+    <style>
+        #escritaNomeLanche {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 4vh;
+            color: white;
+            font-weight: bold;
+        }
+
+        #escritaDescricaoLanche {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 2vh;
+            color: white;
+            font-weight: bold;
+        }
+
+        #escritaPrecoLanche {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 3vh;
+            color: white;
+            font-weight: bold;
+        }
+
+        body {
+            background-image:url(./img/fundo4.jpg);  
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        #quantidade {
+        width:90px;
+        }
+    
+    	#adicionar {
+    	width:90px;
+    	}
+    	
+    	#cardLanche {
+    	background-color:rgba(10, 0, 0, 0.6);
+    	}
+    </style>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="#" id="escola" style="color: black; font-weight: bold;">CARDAPIO</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                   </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
+                  <ul class="navbar-nav mr-auto">
+                  
+                    <li class="nav-item active">
+                      <a class="nav-link" href="#" style="color: black; font-weight: bold;">Mudar nº do pedido<span class="sr-only">(current)</span></a>
+                    </li>
+                    
+                    <li class="nav-item">
+                      <a class="nav-link" href="inicio.jsp" style="color: black; font-weight: bold;">Inicio</a>
+                    </li>
+                    
+                    </ul>
+                  
+                  <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" id="busca2" type="search" placeholder="Qual lanche deseja?" aria-label="Search" >
+                        <button class="btn btn-danger my-2 my-sm-0" type="submit">Buscar</button>
+                  </form>
+              
+            </div>
+          </nav>
+          
+    <div class="container-fluid">
+        <div class="row mb-5">
+            <div class="col-1"></div>
+     <div class="col-10 cards" id="cartao">
+               <%
+               ProdutoDAO pd = new ProdutoDAO(); 
+               Produto p = new Produto();
+            		   
+               
+               for(Produto pr : pd.listaProdutos()){
+            	      
+               %>
+               <div class="card mt-3" id="cardLanche">
+                    <div class="card-header" id="escritaNomeLanche">
+                    
+                            <%=pr.getNome() %>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8" id="escritaDescricaoLanche">
+                               <%=pr.getDescricao() %>
+                            </div>
+                            <div class="col-2 text-center" id="escritaPrecoLanche">
+                                <%=pr.getPreco() %> R$
+                            </div>
+                            
+                            <div class="col-2 text-center" id="escritaPrecoLanche">
+                            <form>
+                            		<input type="hidden" name="codCapturaProd" value="<%=pr.getCodigo() %>"> 
+                            		<input class="form-control mb-1" type="text" name="quantia" id="quantidade" placeholder="Quantia">
+                                    <input class="btn btn-danger btn-block" id="adicionar" type="submit" style="color: rgba(219, 140, 83, 0.9);">+</button>
+                           </form>
+                                </div>
+                            <div class="col-2 text-center">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%} %>
+            </div>
+        </div>
+    </div>
+    
+    	
+	<script>
+		var busca = document.querySelector("#busca2");
+		busca.addEventListener("keyup",filtro);
+		
+		function filtro(){
+			var card = document.querySelectorAll(".card");
+			
+			for(var i=0;i<card.length;i++){
+				var col = card[i].querySelectorAll(".card-header")[0];
+				var value = col.innerHTML;	
+				if(value.includes(busca.value)){
+					card[i].style.display = "";
+				}else{
+					card[i].style.display = "none";
+				}
+			}
+		}
+	</script>
+
+
+</body>
+</html>

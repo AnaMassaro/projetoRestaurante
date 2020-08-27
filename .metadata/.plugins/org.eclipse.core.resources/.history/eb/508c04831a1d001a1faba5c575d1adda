@@ -1,0 +1,23 @@
+package model;
+
+public class Pedido {
+	
+	private int pedido;
+	private int comanda;
+	
+	public int getPedido() {
+		return pedido;
+	}
+	public void setPedido(int pedido) {
+		this.pedido = pedido;
+	}
+	public int getComanda() {
+		return comanda;
+	}
+	public void setComanda(int comanda) {
+		this.comanda = comanda;
+	}
+	
+	
+
+}

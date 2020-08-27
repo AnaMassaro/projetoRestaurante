@@ -1,0 +1,26 @@
+package control;
+
+import java.sql.SQLException;
+
+import model.Pedido;
+import model.Produto;
+import model.User;
+
+public class ClasseTestes {
+
+	public static void main(String[] args) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		ProdutoDAO pd = new ProdutoDAO();
+		Produto p = new Produto();
+		Pedido pe = new Pedido();
+		PedidoDAO ped = new PedidoDAO();
+		
+		
+		pe.setComanda(5);
+		System.out.println(ped.cadastraPedido(pe));
+		
+		
+	}
+
+}

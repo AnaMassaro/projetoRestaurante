@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="model.Comanda"/>
+<fullyQualifiedTypeName name="control.ComandaDAO"/>
+<fullyQualifiedTypeName name="control.ProdutoDAO"/>
+<fullyQualifiedTypeName name="model.Produto"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="control.PedidoDAO"/>
+<fullyQualifiedTypeName name="model.Pedido"/>
+<fullyQualifiedTypeName name="java.sql.Statement"/>
+<fullyQualifiedTypeName name="control.ItemPedidoDAO"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="model.ItemPedido"/>
+<fullyQualifiedTypeName name="com.sun.javafx.beans.IDProperty"/>
+<fullyQualifiedTypeName name="control.UserDAO"/>
+<fullyQualifiedTypeName name="model.User"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,122 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"
+    %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="model.Produto"%>
+<%@page import="java.util.List"%>
+<%@page import="control.ProdutoDAO"%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Controle de Produtos</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="style.css">
+	
+	    <style>
+	
+		body,html{
+			height:100%;
+		}
+		
+        body {
+            background-image:url(./img/plano2.jpg);  
+            background-repeat: no-repeat;
+            background-size: cover;
+            
+        }
+        
+        .container {
+	         width: 100vw;
+	         height: 100vh;
+	         display: flex;
+	         flex-direction: row;
+	         justify-content: center;
+	         align-items: center;
+    	 }
+    	 
+    	 #bt {
+    	    margin: 0 15px;
+
+    	 }
+   
+        </style>
+</head>
+
+<body>
+
+
+
+ <div class="container-fluid">
+        <div class="row mb-5">
+            <div class="col-1"></div>
+     <div class="col-10 cards" id="cartao">
+               
+              <%
+		
+				ProdutoDAO pd = new ProdutoDAO();
+				Produto p = new Produto();
+				
+				for(Produto pr : pd.listaProdutos()) {
+			
+		
+			%>
+               <div class="card mt-3">
+                    <div class="card-header">
+                            <%=pr.getNome() %>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                               <%=pr.getDescricao() %>
+                            </div>
+                            <div class="col-2 text-center">
+                                <%=pr.getPreco() %> R$
+                            </div>
+                            
+                          		<form method="get" action="editarProduto.jsp">
+									<input type="hidden" name="codEdit" value="<%=pr.getCodigo()%>">
+									<button type="submit" class="btn btn-danger" id="bt">Editar</button>
+								</form>
+								
+								<form method="get" action="Processa">
+									<input type="hidden" name="acao" value="excluirProd">
+									<input type="hidden" name="codExcluir" value="<%=pr.getCodigo()%>">
+									<button type="submit" class="btn btn-dark">Excluir</button>
+								</form>
+								
+                            <div class="col-2 text-center">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%} %>
+            </div>
+        </div>
+    </div>
+	
+		<script>
+		var busca = document.querySelector("#busca2");
+		busca.addEventListener("keyup",filtro);
+		
+		function filtro(){
+			var card = document.querySelectorAll(".card");
+			
+			for(var i=0;i<card.length;i++){
+				var col = card[i].querySelectorAll(".card-header")[0];
+				var value = col.innerHTML;	
+				if(value.includes(busca.value)){
+					card[i].style.display = "";
+				}else{
+					card[i].style.display = "none";
+				}
+			}
+		}
+	</script>
+	
+</body>
+
+</html>

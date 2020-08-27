@@ -1,0 +1,38 @@
+package model;
+
+public class ItemPedido {
+	
+	private int pedido;
+	private int codProd;
+	private int quantidade;
+	private String observacoes;
+	
+
+	public int getPedido() {
+		return pedido;
+	}
+	public void setPedido(int pedido) {
+		this.pedido = pedido;
+	}
+	public int getCodProd() {
+		return codProd;
+	}
+	public void setCodProd(int codProd) {
+		this.codProd = codProd;
+	}
+	public int getQuantidade() {
+		return quantidade;
+	}
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+	public String getObservacoes() {
+		return observacoes;
+	}
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
+	
+	
+
+}

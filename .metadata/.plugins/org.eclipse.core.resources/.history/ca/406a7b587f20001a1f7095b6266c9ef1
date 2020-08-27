@@ -1,0 +1,90 @@
+package control;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Produto;
+import model.User;
+
+public class UserDAO {
+	
+	private Connection con;
+	private PreparedStatement ps;
+	private User u;
+	
+	public boolean cadastraUsuario(User u) throws SQLException {
+		String sql = "insert into administrador values(default, ?, ?);";
+		con = ConnectionDB.getConnection();
+		
+		ps = con.prepareStatement(sql);
+		ps.setString(1, u.getUser());
+		ps.setString(2, u.getSenha());
+
+		if(ps.executeUpdate()>0){
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public List<User> listaUsuarios() throws SQLException {
+		List<User> lu;
+		String sql = "select * from administrador";
+		con = ConnectionDB.getConnection();
+		PreparedStatement prep = con.prepareStatement(sql);
+		ResultSet rs = prep.executeQuery();
+		lu = new ArrayList<User>();
+		
+		while(rs.next()) {
+			u = new User();
+			u.setCodigoUser(rs.getInt("codigoUser"));
+			u.setUser(rs.getString("user"));
+			u.setSenha(rs.getString("senha"));
+			lu.add(u);
+		}
+		return lu;
+	}
+	
+	public User getUser(int capturei) {
+		User p = new User();
+		String sql = "select * from user where codigoUser = ?"
+;	}
+	
+	/*	public Produto getProduto(int capturei) throws SQLException {
+		Produto p = new Produto();
+		String sql = "select * from itens where codigoProd = ?";
+		con = ConnectionDB.getConnection();
+		PreparedStatement prepa = con.prepareStatement(sql);
+		prepa.setInt(1, capturei);
+		ResultSet res = prepa.executeQuery();
+		while(res.next()) {
+			p.setCodigo(res.getInt("codigoProd"));
+			p.setTipo(res.getString("tipo"));
+			p.setNome(res.getString("nome"));
+			p.setDescricao(res.getString("descricao"));
+			p.setPreco(res.getDouble("preço"));
+		}
+		
+		return p;
+	}*/
+	
+	public boolean login(String user, String senha) throws SQLException{
+		String sql = "select user,senha from administrador WHERE user = '" + user + "' AND senha = '" + senha + "';";
+		
+		con = ConnectionDB.getConnection();
+		ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			if(rs.getString("user").equals(user) && (rs.getString("senha").equals(senha))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+}

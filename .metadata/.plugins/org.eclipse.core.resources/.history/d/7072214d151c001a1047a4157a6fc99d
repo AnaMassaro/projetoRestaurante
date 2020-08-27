@@ -1,0 +1,35 @@
+package control;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import model.Pedido;
+
+public class PedidoDAO {
+	
+	private Connection con;
+	private PreparedStatement ps;
+	private Pedido p;
+	
+	public boolean cadastraPedido(Pedido p) {
+		String sql = "insert into pedidos values(default, ?);";
+	}
+ 	/*	public boolean cadastraProduto(Produto p) throws SQLException {
+		String sql = "insert into itens values(default, ?, ?, ?, ?);";
+		con = ConnectionDB.getConnection();
+		
+		ps = con.prepareStatement(sql);
+		ps.setString(1, p.getTipo());
+		ps.setString(2, p.getNome());
+		ps.setString(3, p.getDescricao());
+		ps.setDouble(4, p.getPreco());
+		
+		if(ps.executeUpdate()>0){
+			return true;
+		}else {
+			return false;
+		}
+	}
+	*/
+}

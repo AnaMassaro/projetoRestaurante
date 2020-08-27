@@ -1,0 +1,13 @@
+drop database autenticoArtesanal;
+show databases;
+create database autenticoArtesanal;
+use autenticoArtesanal;
+create table itens(codigoProd integer auto_increment primary key, tipo varchar(25), nome varchar(50), descricao varchar(150), preço decimal(6,2));
+create table pedidos(pedido integer primary key auto_increment, comanda varchar(45), status varchar(20), data Date);
+create table itemPedido(id_iPedido integer primary key auto_increment, pedido integer, codigoProd integer not null, quantidade integer not null, constraint fk_pedido foreign key(pedido) references pedidos(pedido) on delete cascade, constraint fk_codProd foreign key (codigoProd) references itens(codigoProd) on delete cascade);
+create table administrador(codigoUser integer auto_increment primary key, user varchar(20), senha varchar(20));
+insert into administrador values("", "ana", "ana");
+select * from pedidos;
+select * from itemPedido;
+select * from itens;
+select * from administrador;

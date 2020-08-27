@@ -1,0 +1,12 @@
+package model;
+
+public class ItemPedido {
+	
+	private int pedido;
+	private int codProd;
+	private int quantidade;
+	
+	
+	
+
+}

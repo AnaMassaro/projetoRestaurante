@@ -1,0 +1,20 @@
+package control;
+
+import java.sql.SQLException;
+
+import model.Pedido;
+import model.Produto;
+import model.User;
+
+public class ClasseTestes {
+
+	public static void main(String[] args) throws SQLException {
+		// TODO Auto-generated method stub
+		ItemPedidoDAO ipd = new ItemPedidoDAO();
+		System.out.println(ipd.nomeProd(1));
+	
+		
+		
+	}
+
+}
